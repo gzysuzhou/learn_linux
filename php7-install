@@ -1,0 +1,137 @@
+下载
+# wget  http://php.net/get/php-7.0.2.tar.gz/from/a/mirror
+
+解压安装
+# tar zxvf php-7.0.2.tar.gz
+# cd php-7.0.2
+首先查看安装帮助
+# ./configure   --help 
+./configure --prefix=/data/php7 \
+--with-openssl \
+--with-pcre-regex \
+--with-kerberos \
+--with-libdir=lib \
+--with-libxml-dir \
+--with-mysqli=shared,mysqlnd \
+--with-pdo-mysql=shared,mysqlnd \
+--with-pdo-sqlite \
+--with-gd \
+--with-iconv \
+--with-zlib \
+--with-xmlrpc \
+--with-xsl \
+--with-pear \
+--with-gettext \
+--with-curl \
+--with-png-dir \
+--with-jpeg-dir \
+--with-freetype-dir \
+--with-fpm-user=nginx \
+--with-fpm-group=nginx \
+--enable-mysqlnd \
+--enable-zip \
+--enable-inline-optimization \
+--enable-shared \
+--enable-libxml \
+--enable-xml \
+--enable-bcmath \
+--enable-shmop \
+--enable-sysvsem \
+--enable-mbregex \
+--enable-mbstring \
+--enable-ftp \
+--enable-gd-native-ttf \
+--enable-pcntl \
+--enable-sockets \
+--enable-soap \
+--enable-session \
+--enable-opcache \
+--enable-fpm \
+--enable-maintainer-zts \
+--enable-fileinfo \
+假设配置错误，须要安装须要的模块，直接yum一并安装依赖库
+
+# yum -y install libjpeg libjpeg-devel libpng libpng-devel freetype freetype-devel libxml2 libxml2-devel mysql pcre-devel
+
+如果报错 No package libmcrypt available，
+解决方法：yum  install epel-release  //扩展包更新包
+
+编译安装
+# make &&  make install
+
+cp php.ini-production /usr/local/php7/etc/php.ini
+cp sapi/fpm/init.d.php-fpm /etc/init.d/php7-fpm
+chmod +x /etc/init.d/php7-fpm
+cp /usr/local/php7/etc/php-fpm.conf.default /usr/local/php7/etc/php-fpm.conf
+cp /usr/local/php7/etc/php-fpm.d/www.conf.default /usr/local/php7/etc/php-fpm.d/www.conf
+# 启动
+/etc/init.d/php7-fpm start
+
+安装nginx
+1).gcc:nginx编译依赖gcc环境
+
+　　　安装命令：yum install gcc-c++
+
+　2).pcre:(Perl Compatible Regular Expressions)是一个Perl库，包括 perl 兼容的正则表达式库。nginx的http模块使用pcre来解析正则表达式.
+
+　　　安装命令：yum install -y pcre pcre-devel
+
+　3).zlib：该库提供了很多种压缩和解压缩的方式，nginx使用zlib对http包的内容进行gzip。
+
+　　　安装命令：yum install -y zlib zlib-devel
+
+　4).openssl:一个强大的安全套接字层密码库，囊括主要的密码算法、常用的密钥和证书封装管理功能及SSL协议，并提供丰富的应用程序供测试或其它目的使用。nginx不仅支持http协议，还支持https（即在ssl协议上传输http）.
+
+　　　安装命令：yum install -y openssl openssl-devel
+
+2.下载nginx源码包
+
+　下载命令：wget http://nginx.org/download/nginx-1.12.0.tar.gz
+
+3.解压缩源码包并进入
+
+　1).解压缩：tar -zxvf nginx-1.12.0.tar.gz
+
+　2).进入解压缩后文件夹：cd nginx-1.12.0
+
+4.配置编译参数命令:(可以使用./configure --help查询详细参数)
+
+./configure \
+--prefix=/usr/local/nginx \
+--pid-path=/var/run/nginx/nginx.pid \
+--lock-path=/var/lock/nginx.lock \
+--error-log-path=/var/log/nginx/error.log \
+--http-log-path=/var/log/nginx/access.log \
+--with-http_gzip_static_module \
+--http-client-body-temp-path=/var/temp/nginx/client \
+--http-proxy-temp-path=/var/temp/nginx/proxy \
+--http-fastcgi-temp-path=/var/temp/nginx/fastcgi \
+--http-uwsgi-temp-path=/var/temp/nginx/uwsgi \
+--http-scgi-temp-path=/var/temp/nginx/scgi
+注：安装之前需要手动创建上面指定的nginx文件夹，即/var/temp、/var/temp/nginx、/var/run/nginx/文件夹，否则启动时报错
+
+5.编译并安装
+
+　　命令：make && make install
+
+　　可以进入/usr/local/nginx查看文件是否存在conf、sbin、html文件夹，若存在则安装成功
+
+四、基本使用
+1.启动nginx
+
+　1).进入安装目录
+
+　　　cd /usr/local/nginx/sbin/
+
+　2).启动
+
+　　　./nginx
+
+　3).若报错：[emerg] open() "/var/run/nginx/nginx.pid" failed (2: No such file or directory)
+
+　　　需要查看下是不是在/var/run文件夹下不存在nginx文件夹，不存在则新建
+
+　4).查看是否启动：ps -ef | grep nginx
+
+　　　如果有master和worker两个进程证明启动成功
+
