@@ -1,12 +1,13 @@
-ÏÂÔØ
+ä¸‹è½½
 # wget  http://php.net/get/php-7.0.2.tar.gz/from/a/mirror
 
-½âÑ¹°²×°
+è§£å‹å®‰è£…
 # tar zxvf php-7.0.2.tar.gz
 # cd php-7.0.2
-Ê×ÏÈ²é¿´°²×°°ïÖú
+é¦–å…ˆæŸ¥çœ‹å®‰è£…å¸®åŠ©
 # ./configure   --help 
 ./configure --prefix=/data/php7 \
+--with-openssl-dir=/usr/include/openssl
 --with-openssl \
 --with-pcre-regex \
 --with-kerberos \
@@ -49,14 +50,14 @@
 --enable-fpm \
 --enable-maintainer-zts \
 --enable-fileinfo \
-¼ÙÉèÅäÖÃ´íÎó£¬ĞëÒª°²×°ĞëÒªµÄÄ£¿é£¬Ö±½ÓyumÒ»²¢°²×°ÒÀÀµ¿â
+å‡è®¾é…ç½®é”™è¯¯ï¼Œé¡»è¦å®‰è£…é¡»è¦çš„æ¨¡å—ï¼Œç›´æ¥yumä¸€å¹¶å®‰è£…ä¾èµ–åº“
 
 # yum -y install libjpeg libjpeg-devel libpng libpng-devel freetype freetype-devel libxml2 libxml2-devel mysql pcre-devel
 
-Èç¹û±¨´í No package libmcrypt available£¬
-½â¾ö·½·¨£ºyum  install epel-release  //À©Õ¹°ü¸üĞÂ°ü
+å¦‚æœæŠ¥é”™ No package libmcrypt availableï¼Œ
+è§£å†³æ–¹æ³•ï¼šyum  install epel-release  //æ‰©å±•åŒ…æ›´æ–°åŒ…
 
-±àÒë°²×°
+ç¼–è¯‘å®‰è£…
 # make &&  make install
 
 cp php.ini-production /usr/local/php7/etc/php.ini
@@ -64,37 +65,37 @@ cp sapi/fpm/init.d.php-fpm /etc/init.d/php7-fpm
 chmod +x /etc/init.d/php7-fpm
 cp /usr/local/php7/etc/php-fpm.conf.default /usr/local/php7/etc/php-fpm.conf
 cp /usr/local/php7/etc/php-fpm.d/www.conf.default /usr/local/php7/etc/php-fpm.d/www.conf
-# Æô¶¯
+# å¯åŠ¨
 /etc/init.d/php7-fpm start
 
-°²×°nginx
-1).gcc:nginx±àÒëÒÀÀµgcc»·¾³
+å®‰è£…nginx
+1).gcc:nginxç¼–è¯‘ä¾èµ–gccç¯å¢ƒ
 
-¡¡¡¡¡¡°²×°ÃüÁî£ºyum install gcc-c++
+ã€€ã€€ã€€å®‰è£…å‘½ä»¤ï¼šyum install gcc-c++
 
-¡¡2).pcre:(Perl Compatible Regular Expressions)ÊÇÒ»¸öPerl¿â£¬°üÀ¨ perl ¼æÈİµÄÕıÔò±í´ïÊ½¿â¡£nginxµÄhttpÄ£¿éÊ¹ÓÃpcreÀ´½âÎöÕıÔò±í´ïÊ½.
+ã€€2).pcre:(Perl Compatible Regular Expressions)æ˜¯ä¸€ä¸ªPerlåº“ï¼ŒåŒ…æ‹¬ perl å…¼å®¹çš„æ­£åˆ™è¡¨è¾¾å¼åº“ã€‚nginxçš„httpæ¨¡å—ä½¿ç”¨pcreæ¥è§£ææ­£åˆ™è¡¨è¾¾å¼.
 
-¡¡¡¡¡¡°²×°ÃüÁî£ºyum install -y pcre pcre-devel
+ã€€ã€€ã€€å®‰è£…å‘½ä»¤ï¼šyum install -y pcre pcre-devel
 
-¡¡3).zlib£º¸Ã¿âÌá¹©ÁËºÜ¶àÖÖÑ¹ËõºÍ½âÑ¹ËõµÄ·½Ê½£¬nginxÊ¹ÓÃzlib¶Ôhttp°üµÄÄÚÈİ½øĞĞgzip¡£
+ã€€3).zlibï¼šè¯¥åº“æä¾›äº†å¾ˆå¤šç§å‹ç¼©å’Œè§£å‹ç¼©çš„æ–¹å¼ï¼Œnginxä½¿ç”¨zlibå¯¹httpåŒ…çš„å†…å®¹è¿›è¡Œgzipã€‚
 
-¡¡¡¡¡¡°²×°ÃüÁî£ºyum install -y zlib zlib-devel
+ã€€ã€€ã€€å®‰è£…å‘½ä»¤ï¼šyum install -y zlib zlib-devel
 
-¡¡4).openssl:Ò»¸öÇ¿´óµÄ°²È«Ì×½Ó×Ö²ãÃÜÂë¿â£¬ÄÒÀ¨Ö÷ÒªµÄÃÜÂëËã·¨¡¢³£ÓÃµÄÃÜÔ¿ºÍÖ¤Êé·â×°¹ÜÀí¹¦ÄÜ¼°SSLĞ­Òé£¬²¢Ìá¹©·á¸»µÄÓ¦ÓÃ³ÌĞò¹©²âÊÔ»òÆäËüÄ¿µÄÊ¹ÓÃ¡£nginx²»½öÖ§³ÖhttpĞ­Òé£¬»¹Ö§³Öhttps£¨¼´ÔÚsslĞ­ÒéÉÏ´«Êähttp£©.
+ã€€4).openssl:ä¸€ä¸ªå¼ºå¤§çš„å®‰å…¨å¥—æ¥å­—å±‚å¯†ç åº“ï¼Œå›Šæ‹¬ä¸»è¦çš„å¯†ç ç®—æ³•ã€å¸¸ç”¨çš„å¯†é’¥å’Œè¯ä¹¦å°è£…ç®¡ç†åŠŸèƒ½åŠSSLåè®®ï¼Œå¹¶æä¾›ä¸°å¯Œçš„åº”ç”¨ç¨‹åºä¾›æµ‹è¯•æˆ–å…¶å®ƒç›®çš„ä½¿ç”¨ã€‚nginxä¸ä»…æ”¯æŒhttpåè®®ï¼Œè¿˜æ”¯æŒhttpsï¼ˆå³åœ¨sslåè®®ä¸Šä¼ è¾“httpï¼‰.
 
-¡¡¡¡¡¡°²×°ÃüÁî£ºyum install -y openssl openssl-devel
+ã€€ã€€ã€€å®‰è£…å‘½ä»¤ï¼šyum install -y openssl openssl-devel
 
-2.ÏÂÔØnginxÔ´Âë°ü
+2.ä¸‹è½½nginxæºç åŒ…
 
-¡¡ÏÂÔØÃüÁî£ºwget http://nginx.org/download/nginx-1.12.0.tar.gz
+ã€€ä¸‹è½½å‘½ä»¤ï¼šwget http://nginx.org/download/nginx-1.12.0.tar.gz
 
-3.½âÑ¹ËõÔ´Âë°ü²¢½øÈë
+3.è§£å‹ç¼©æºç åŒ…å¹¶è¿›å…¥
 
-¡¡1).½âÑ¹Ëõ£ºtar -zxvf nginx-1.12.0.tar.gz
+ã€€1).è§£å‹ç¼©ï¼štar -zxvf nginx-1.12.0.tar.gz
 
-¡¡2).½øÈë½âÑ¹ËõºóÎÄ¼ş¼Ğ£ºcd nginx-1.12.0
+ã€€2).è¿›å…¥è§£å‹ç¼©åæ–‡ä»¶å¤¹ï¼šcd nginx-1.12.0
 
-4.ÅäÖÃ±àÒë²ÎÊıÃüÁî:(¿ÉÒÔÊ¹ÓÃ./configure --help²éÑ¯ÏêÏ¸²ÎÊı)
+4.é…ç½®ç¼–è¯‘å‚æ•°å‘½ä»¤:(å¯ä»¥ä½¿ç”¨./configure --helpæŸ¥è¯¢è¯¦ç»†å‚æ•°)
 
 ./configure \
 --prefix=/usr/local/nginx \
@@ -108,30 +109,30 @@ cp /usr/local/php7/etc/php-fpm.d/www.conf.default /usr/local/php7/etc/php-fpm.d/
 --http-fastcgi-temp-path=/var/temp/nginx/fastcgi \
 --http-uwsgi-temp-path=/var/temp/nginx/uwsgi \
 --http-scgi-temp-path=/var/temp/nginx/scgi
-×¢£º°²×°Ö®Ç°ĞèÒªÊÖ¶¯´´½¨ÉÏÃæÖ¸¶¨µÄnginxÎÄ¼ş¼Ğ£¬¼´/var/temp¡¢/var/temp/nginx¡¢/var/run/nginx/ÎÄ¼ş¼Ğ£¬·ñÔòÆô¶¯Ê±±¨´í
+æ³¨ï¼šå®‰è£…ä¹‹å‰éœ€è¦æ‰‹åŠ¨åˆ›å»ºä¸Šé¢æŒ‡å®šçš„nginxæ–‡ä»¶å¤¹ï¼Œå³/var/tempã€/var/temp/nginxã€/var/run/nginx/æ–‡ä»¶å¤¹ï¼Œå¦åˆ™å¯åŠ¨æ—¶æŠ¥é”™
 
-5.±àÒë²¢°²×°
+5.ç¼–è¯‘å¹¶å®‰è£…
 
-¡¡¡¡ÃüÁî£ºmake && make install
+ã€€ã€€å‘½ä»¤ï¼šmake && make install
 
-¡¡¡¡¿ÉÒÔ½øÈë/usr/local/nginx²é¿´ÎÄ¼şÊÇ·ñ´æÔÚconf¡¢sbin¡¢htmlÎÄ¼ş¼Ğ£¬Èô´æÔÚÔò°²×°³É¹¦
+ã€€ã€€å¯ä»¥è¿›å…¥/usr/local/nginxæŸ¥çœ‹æ–‡ä»¶æ˜¯å¦å­˜åœ¨confã€sbinã€htmlæ–‡ä»¶å¤¹ï¼Œè‹¥å­˜åœ¨åˆ™å®‰è£…æˆåŠŸ
 
-ËÄ¡¢»ù±¾Ê¹ÓÃ
-1.Æô¶¯nginx
+å››ã€åŸºæœ¬ä½¿ç”¨
+1.å¯åŠ¨nginx
 
-¡¡1).½øÈë°²×°Ä¿Â¼
+ã€€1).è¿›å…¥å®‰è£…ç›®å½•
 
-¡¡¡¡¡¡cd /usr/local/nginx/sbin/
+ã€€ã€€ã€€cd /usr/local/nginx/sbin/
 
-¡¡2).Æô¶¯
+ã€€2).å¯åŠ¨
 
-¡¡¡¡¡¡./nginx
+ã€€ã€€ã€€./nginx
 
-¡¡3).Èô±¨´í£º[emerg] open() "/var/run/nginx/nginx.pid" failed (2: No such file or directory)
+ã€€3).è‹¥æŠ¥é”™ï¼š[emerg] open() "/var/run/nginx/nginx.pid" failed (2: No such file or directory)
 
-¡¡¡¡¡¡ĞèÒª²é¿´ÏÂÊÇ²»ÊÇÔÚ/var/runÎÄ¼ş¼ĞÏÂ²»´æÔÚnginxÎÄ¼ş¼Ğ£¬²»´æÔÚÔòĞÂ½¨
+ã€€ã€€ã€€éœ€è¦æŸ¥çœ‹ä¸‹æ˜¯ä¸æ˜¯åœ¨/var/runæ–‡ä»¶å¤¹ä¸‹ä¸å­˜åœ¨nginxæ–‡ä»¶å¤¹ï¼Œä¸å­˜åœ¨åˆ™æ–°å»º
 
-¡¡4).²é¿´ÊÇ·ñÆô¶¯£ºps -ef | grep nginx
+ã€€4).æŸ¥çœ‹æ˜¯å¦å¯åŠ¨ï¼šps -ef | grep nginx
 
-¡¡¡¡¡¡Èç¹ûÓĞmasterºÍworkerÁ½¸ö½ø³ÌÖ¤Ã÷Æô¶¯³É¹¦
+ã€€ã€€ã€€å¦‚æœæœ‰masterå’Œworkerä¸¤ä¸ªè¿›ç¨‹è¯æ˜å¯åŠ¨æˆåŠŸ
 
