@@ -6,7 +6,7 @@
 # cd php-7.0.2
 首先查看安装帮助
 # ./configure   --help 
-./configure --prefix=/data/php7 \
+./configure --prefix=/usr/local/php \
 --with-openssl \
 --with-pcre-regex \
 --with-kerberos \
@@ -48,18 +48,19 @@
 --enable-opcache \
 --enable-fpm \
 --enable-maintainer-zts \
---enable-fileinfo \
-报错configure: error: Cannot find OpenSSL's <evp.h> 错误解决方法：
-export PHP_OPENSSL_DIR=yes
-./configure -with-openssl-dir=/usr/include/openssl
+--enable-fileinfo
+报错1configure: error: Cannot find OpenSSL's <evp.h> 错误解决方法：
+yum install -y openssl openssl-devel
 再次执行
 
 假设配置错误，须要安装须要的模块，直接yum一并安装依赖库
 
 # yum -y install libjpeg libjpeg-devel libpng libpng-devel freetype freetype-devel libxml2 libxml2-devel mysql pcre-devel
 
-如果报错 No package libmcrypt available，
+如果报错2 No package libmcrypt available，
 解决方法：yum  install epel-release  //扩展包更新包
+报错3：xslt-config not found. Please reinstall the libxslt >= 1.1.0 distribution
+yum -y install libxslt libxslt-devel
 
 编译安装
 # make &&  make install
