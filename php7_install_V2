@@ -1,0 +1,97 @@
+docker Centos7 编译安装PHP7
+PHP7，编译安装：
+环境：centos7   （注意：因为我用的nginx, 此配置参数没有考虑到apache，所以不合适需要用apache的朋友照搬过去运行，但是可以参考。）
+ 
+直接下载PHP7.0.2的安装包解压，编译，安装:
+下载php7,并解压
+$ cd /usr/src/
+$ wget http://cn2.php.net/distributions/php-7.0.2.tar.gz
+#解压
+$ tar -xzxvf php-7.0.2.tar.gz
+$ cd php-7.0.2
+ 
+解压完后先不要编译，请检查是否安装了gcc ,没有的话执行yum install gcc
+检查是否安装了libxml2 ,没有的话执行yum install libxml2
+检查是否安装了libxml2-devel,没有的话执行yum install libxml2-devel
+注：因为改为用nginx了，所以编译参数中的--with-apxs2=/usr/bin/apxs去掉了，如果要配置apache用，安装PHP前，请先安装apache。
+ 
+为减少后面的报错先安装依赖：
+yum install -y epel-release openssl openssl-devel  curl-devel libjpeg.x86_64 libpng.x86_64 freetype.x86_64 libjpeg-devel.x86_64 libpng-devel.x86_64 freetype-devel.x86_64 bzip2-devel.x86_64 libXpm-devel gmp-devel icu libicu libicu-devel php-mcrypt  libmcrypt  libmcrypt-devel  postgresql-devel libxslt-devel
+ 
+编译参数配置
+'./configure' '--prefix=/usr/local/php' '--with-pdo-pgsql' '--with-zlib-dir' '--with-freetype-dir' '--enable-mbstring' '--with-libxml-dir=/usr' '--enable-soap' '--enable-calendar' '--with-curl' '--with-mcrypt' '--with-gd' '--with-pgsql' '--disable-rpath' '--enable-inline-optimization' '--with-bz2' '--with-zlib' '--enable-sockets' '--enable-sysvsem' '--enable-sysvshm' '--enable-pcntl' '--enable-mbregex' '--enable-exif' '--enable-bcmath' '--with-mhash' '--enable-zip' '--with-pcre-regex' '--with-pdo-mysql' '--with-mysqli' '--with-jpeg-dir=/usr' '--with-png-dir=/usr' '--enable-gd-native-ttf' '--with-openssl' '--with-fpm-user=www-data' '--with-fpm-group=www-data' '--with-libdir=/lib/x86_64-linux-gnu/' '--enable-ftp' '--with-gettext' '--with-xmlrpc' '--with-xsl' '--enable-opcache' '--enable-fpm' '--with-iconv' '--with-xpm-dir=/usr'
+ 
+出现报错 Cannot find OpenSSL's <evp.h>
+则执行 yum install openssl openssl-devel
+ 
+出现报错 Please reinstall the libcurl distribution
+则执行 yum -y install curl-devel
+ 
+出现报错 jpeglib.h not found
+则执行 yum install libjpeg.x86_64 libpng.x86_64 freetype.x86_64 libjpeg-devel.x86_64 libpng-devel.x86_64 freetype-devel.x86_64 -y
+和执行yum install libjpeg-devel
+ 
+ 
+checking for BZip2 in default path... not found
+configure: error: Please reinstall the BZip2 distribution
+这是bzip2软件包没有安装
+解决办法
+yum install bzip2-devel.x86_64 -y
+ 
+ 
+configure: error: xpm.h not found.
+yum install libXpm-devel
+ 
+error: Unable to locate gmp.h
+Fix: yum install gmp-devel
+ 
+现象：Unable to detect ICU prefix or /usr//bin/icu-config failed. Please verify ICU install
+ prefix and make sure icu-config works
+解决办法：yum install -y icu libicu libicu-devel
+ 
+错误：mcrypt.h not found. Please reinstall libmcrypt.
+解决办法：yum  install  php-mcrypt  libmcrypt  libmcrypt-devel
+ 
+错误： configure: error: Cannot find libpq-fe.h. Please specify correct PostgreSQL installation path
+解决办法：yum install  postgresql-devel
+ 
+错误 ： configure: error: xslt-config not found. Please reinstall the libxslt >= 1.1.0 distribution
+解决： yum install libxslt-devel
+ 
+配置的checking 结束后，执行：
+ 
+make clean && make && make install
+ 
+安装完成后，我们要把源码包中的配置文件复制到PHP安装目录下，源码包中有两个配置  php.ini-development  php.ini-production  ，看名字就知道，一个是开发环境，一个是生产环境，我们这里就复制开发环境的
+cp php.ini-development /usr/local/php/lib/php.ini
+ 
+另外还需要设置环境变量 ：
+修改/etc/profile文件使其永久性生效，并对所有系统用户生效，在文件末尾加上如下两行代码
+PATH=$PATH:/usr/local/php/bin
+export PATH
+然后执行 命令 source /etc/profile
+ 
+php -v 就可以看到PHP版本信息了。
+ 
+ 
+此时还需要配置PHP-fpm:
+cp /usr/local/php/etc/php-fpm.conf.default /usr/local/php/etc/php-fpm.conf
+ 
+cp /usr/local/php/etc/php-fpm.d/www.conf.default /usr/local/php/etc/php-fpm.d/www.conf
+ 
+cp /usr/src/php-7.0.2/sapi/fpm/init.d.php-fpm /etc/init.d/php-fpm
+ 
+chmod +x /etc/init.d/php-fpm
+ 
+启动php-fpm:
+/etc/init.d/php-fpm start
+ 
+ 
+如果出现错误：ERROR: [pool www] cannot get uid for user 'www-data'
+则新建www-data 用户组：
+groupadd www-data
+useradd -g www-data www-data
+然后再启动php-fpm
+ 
+然后安装nginx
+yum install nginx
