@@ -26,8 +26,6 @@
 --with-png-dir \
 --with-jpeg-dir \
 --with-freetype-dir \
---with-fpm-user=nginx \
---with-fpm-group=nginx \
 --enable-mysqlnd \
 --enable-zip \
 --enable-inline-optimization \
@@ -68,13 +66,13 @@ https://curl.haxx.se/download.html
 编译安装
 # make &&  make install
 
-cp php.ini-production /usr/local/php7/etc/php.ini
-cp sapi/fpm/init.d.php-fpm /etc/init.d/php7-fpm
-chmod +x /etc/init.d/php7-fpm
-cp /usr/local/php7/etc/php-fpm.conf.default /usr/local/php7/etc/php-fpm.conf
-cp /usr/local/php7/etc/php-fpm.d/www.conf.default /usr/local/php7/etc/php-fpm.d/www.conf
+cp php.ini-production /usr/local/php/etc/php.ini
+cp sapi/fpm/init.d.php-fpm /etc/init.d/php-fpm
+chmod +x /etc/init.d/php-fpm
+cp /usr/local/php/etc/php-fpm.conf.default /usr/local/php/etc/php-fpm.conf
+cp /usr/local/php/etc/php-fpm.d/www.conf.default /usr/local/php/etc/php-fpm.d/www.conf
 # 启动
-/etc/init.d/php7-fpm start
+/etc/init.d/php-fpm start
 
 安装nginx
 1).gcc:nginx编译依赖gcc环境
