@@ -22,7 +22,7 @@
 --with-xsl \
 --with-pear \
 --with-gettext \
---with-curl \
+--with-curl=/usr/local \
 --with-png-dir \
 --with-jpeg-dir \
 --with-freetype-dir \
@@ -61,6 +61,9 @@ yum install -y openssl openssl-devel
 解决方法：yum  install epel-release  //扩展包更新包
 报错3：xslt-config not found. Please reinstall the libxslt >= 1.1.0 distribution
 yum -y install libxslt libxslt-devel
+
+安装curl最新库
+https://curl.haxx.se/download.html
 
 编译安装
 # make &&  make install
