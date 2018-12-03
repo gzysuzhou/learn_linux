@@ -141,4 +141,20 @@ cp /usr/local/php/etc/php-fpm.d/www.conf.default /usr/local/php/etc/php-fpm.d/ww
 　4).查看是否启动：ps -ef | grep nginx
 
 　　　如果有master和worker两个进程证明启动成功
+   
+  5). vagrant 虚拟机端口映射
+  用了两年vagrant却发现从来没去了解过它的配置，以至于连怎么将物理机端口映射到虚拟机端口都不知道。。。罪过
+在vagrant配置文件vagrantfile中可以看到如下配置
+config.vm.network "forwarded_port", guest: 80, host: 8080
+
+这一行的意思就是把对host机器上8080端口的访问请求forward到虚拟机的80端口的服务上，如果要再添加一个端口转发
+config.vm.network "forwarded_port", guest: 80, host: 8080
+config.vm.network "forwarded_port", guest: 8181, host: 8181
+
+添加完之后执行vagrant reload命令重新加载配置文件即可，so easy~
+
+作者：就没一个昵称能用
+链接：https://www.jianshu.com/p/dce19a63b168
+來源：简书
+简书著作权归作者所有，任何形式的转载都请联系作者获得授权并注明出处。
 
